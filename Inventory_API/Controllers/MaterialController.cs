@@ -32,15 +32,15 @@ namespace Inventory_API.Controllers
             return Ok(new { data = data});
         }
 
-        [HttpGet("GetSingleMaterial")]
-        public async Task<IActionResult> GetSingle([FromBody] int id) {
+        [HttpGet("GetSingleMaterial/{id}")]
+        public async Task<IActionResult> GetSingle(int id) {
             var data = await _db.Materials.Where(i=>i.Id == id).ToListAsync();
             return Ok(new { data = data});
         }
 
 
-        [HttpGet("Remove")]
-        public async Task<IActionResult> Remove([FromBody] int id) {
+        [HttpGet("Remove/{id}")]
+        public async Task<IActionResult> Remove(int id) {
             var data = await _db.Materials.Where(i=>i.Id == id).FirstOrDefaultAsync();
             if (data!=null)
             {

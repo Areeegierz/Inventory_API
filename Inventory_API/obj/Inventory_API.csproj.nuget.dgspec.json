@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nontawat\\Desktop\\Inventory\\Inventory_API\\Inventory_API\\Inventory_API.csproj": {}
+    "C:\\Work\\Inventory_API\\Inventory_API\\Inventory_API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nontawat\\Desktop\\Inventory\\Inventory_API\\Inventory_API\\Inventory_API.csproj": {
+    "C:\\Work\\Inventory_API\\Inventory_API\\Inventory_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nontawat\\Desktop\\Inventory\\Inventory_API\\Inventory_API\\Inventory_API.csproj",
+        "projectUniqueName": "C:\\Work\\Inventory_API\\Inventory_API\\Inventory_API.csproj",
         "projectName": "Inventory_API",
-        "projectPath": "C:\\Users\\Nontawat\\Desktop\\Inventory\\Inventory_API\\Inventory_API\\Inventory_API.csproj",
+        "projectPath": "C:\\Work\\Inventory_API\\Inventory_API\\Inventory_API.csproj",
         "packagesPath": "C:\\Users\\Nontawat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nontawat\\Desktop\\Inventory\\Inventory_API\\Inventory_API\\obj\\",
+        "outputPath": "C:\\Work\\Inventory_API\\Inventory_API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nontawat\\AppData\\Roaming\\NuGet\\NuGet.Config",

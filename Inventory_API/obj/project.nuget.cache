@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CZbH3L1W1X9wCRMm6TrEkH/7JiCCkbCTvPbAzCOX83Fsdp8Ic1Djwi1h3WwRNc8oSfI7BVQo1k07rl9lAwxMwg==",
+  "dgSpecHash": "FUu5HA/qc92SNe0WtL2ssvFCo+YAan6EThTKYmrezdp6nigqY31ZhW8jVveNh2QAc5K8zOOYJAs3xmzXxbp8aA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nontawat\\Desktop\\Inventory\\Inventory_API\\Inventory_API\\Inventory_API.csproj",
+  "projectFilePath": "C:\\Work\\Inventory_API\\Inventory_API\\Inventory_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nontawat\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Nontawat\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
