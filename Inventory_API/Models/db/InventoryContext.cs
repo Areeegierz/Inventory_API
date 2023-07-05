@@ -15,6 +15,8 @@ public partial class InventoryContext : DbContext
     {
     }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
     public virtual DbSet<Company> Companies { get; set; }
 
     public virtual DbSet<Inventory> Inventories { get; set; }
@@ -26,6 +28,8 @@ public partial class InventoryContext : DbContext
     public virtual DbSet<Store> Stores { get; set; }
 
     public virtual DbSet<Structure> Structures { get; set; }
+
+    public virtual DbSet<SubCategory> SubCategories { get; set; }
 
     public virtual DbSet<Ucomp> Ucomps { get; set; }
 
@@ -39,6 +43,8 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<ViewSubCategory> ViewSubCategories { get; set; }
+
     public virtual DbSet<ZMaterialxxxxxxxxx> ZMaterialxxxxxxxxxes { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -47,6 +53,16 @@ public partial class InventoryContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Category__3214EC0799B60670");
+
+            entity.ToTable("Category");
+
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Name).IsUnicode(false);
+        });
+
         modelBuilder.Entity<Company>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__CompCode__3214EC0724566323");
@@ -202,6 +218,14 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.SectionName).HasMaxLength(255);
         });
 
+        modelBuilder.Entity<SubCategory>(entity =>
+        {
+            entity.ToTable("SubCategory");
+
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Name).IsUnicode(false);
+        });
+
         modelBuilder.Entity<Ucomp>(entity =>
         {
             entity.ToTable("UComp");
@@ -283,6 +307,17 @@ public partial class InventoryContext : DbContext
 
             entity.Property(e => e.Fname).HasColumnName("FName");
             entity.Property(e => e.Lname).HasColumnName("LName");
+        });
+
+        modelBuilder.Entity<ViewSubCategory>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_SubCategory");
+
+            entity.Property(e => e.CategoryName).IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Name).IsUnicode(false);
         });
 
         modelBuilder.Entity<ZMaterialxxxxxxxxx>(entity =>
