@@ -97,7 +97,92 @@ namespace Inventory_API.Controllers
                             _db.Users.Add(userModel);
                             _db.SaveChanges();
                             var newUser = await _db.Users.Where(i => i.Username == loginModel.Username).Select(i => new { Id = i.Id, Name = i.Fname + " " + i.Lname, Status = i.Status }).FirstOrDefaultAsync();
+                            if (newUser != null)
+                            {
+                                var myUser = await _db.Users.Where(i => i.Id == newUser.Id).FirstOrDefaultAsync();
+                                if (root.data.compcode.Count() > 0)
+                                {
+                                    var compcodeModel = new Ucomp();
+                                    foreach (var item in root.data.compcode)
+                                    {
+                                        compcodeModel.UserId = newUser.Id;
+                                        compcodeModel.CompCode = item;
+                                        _db.Ucomps.Add(compcodeModel);
 
+                                    }
+
+                                    myUser.Role = "CompCode";
+                                    _db.Users.Update(myUser);
+                                }
+                                if (root.data.divisions.Count() > 0)
+                                {
+                                    var divisionModel = new Udivision();
+                                    foreach (var item in root.data.divisions)
+                                    {
+                                        divisionModel.UserId = newUser.Id;
+                                        divisionModel.CompCode = item.compcode;
+                                        divisionModel.DivisionCode = item.divisionNo;
+                                        _db.Udivisions.Add(divisionModel);
+
+                                    }
+                                    myUser.Role = "Division";
+                                    _db.Users.Update(myUser);
+                                }
+                                if (root.data.departments.Count() > 0)
+                                {
+                                    var departmentModel = new Udepartment();
+                                    foreach (var item in root.data.departments)
+                                    {
+                                        departmentModel.UserId = newUser.Id;
+                                        departmentModel.CompCode = item.compcode;
+                                        departmentModel.DivisionCode = item.divisionNo;
+                                        departmentModel.DepartmentCode = item.departmentNo;
+                                        _db.Udepartments.Add(departmentModel);
+
+                                    }
+                                    myUser.Role = "Department";
+                                    _db.Users.Update(myUser);
+                                }
+                                if (root.data.sections.Count() > 0)
+                                {
+                                    var sectionModel = new Usection();
+                                    foreach (var item in root.data.sections)
+                                    {
+                                        sectionModel.UserId = newUser.Id;
+                                        sectionModel.CompCode = item.compcode;
+                                        sectionModel.DivisionCode = item.divisionNo;
+                                        sectionModel.DepartmentCode = item.departmentNo;
+                                        sectionModel.SectionCode = item.sectionNo;
+                                        _db.Usections.Add(sectionModel);
+
+                                    }
+
+                                    myUser.Role = "Section";
+                                    _db.Users.Update(myUser);
+                                }
+                                if (root.data.plants.Count() > 0)
+                                {
+                                    var plantModel = new Uplant();
+                                    foreach (var item in root.data.plants)
+                                    {
+                                        var structure = await _db.Structures.Where(i => i.PlantCode == item.plantNo).FirstOrDefaultAsync();
+                                        plantModel.UserId = newUser.Id;
+                                        plantModel.CompCode = item.compcode;
+                                        plantModel.DivisionCode = structure.DivisionCode;
+                                        plantModel.DepartmentCode = structure.DepartmentCode;
+                                        plantModel.SectionCode = structure.SectionCode;
+                                        plantModel.PlantCode = item.plantNo;
+                                        _db.Uplants.Add(plantModel);
+
+                                    }
+
+                                    myUser.Role = "Plant";
+                                    _db.Users.Update(myUser);
+                                }
+
+                                await _db.SaveChangesAsync();
+
+                            }
                             return Ok(new { User = newUser ,Token = tokenString });
                         }
                         return Unauthorized();

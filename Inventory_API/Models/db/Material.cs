@@ -11,6 +11,8 @@ public partial class Material
 
     public string? Code { get; set; }
 
+    public string? Name { get; set; }
+
     public string? Detail { get; set; }
 
     public string? Parts { get; set; }

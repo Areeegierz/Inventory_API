@@ -37,6 +37,22 @@ namespace Inventory_API.Controllers
             var data = await _db.Materials.Where(i=>i.Id == id).ToListAsync();
             return Ok(new { data = data});
         }
+        
+
+        [HttpGet("GetSingleMaterialbyCode/{code}/{uid}")]
+        public async Task<IActionResult> GetSinglebyCode(string code,int uid) 
+        {
+            if (uid > 0)
+            {
+                var compcode = await _db.Ucomps.Where(i => i.UserId == uid).FirstOrDefaultAsync(); 
+                if (compcode != null)
+                {
+                    var data = await _db.Materials.Where(i => i.Code == code && i.CompCode == compcode.CompCode).FirstOrDefaultAsync();
+                    return Ok(new { data = data });
+                }
+            }
+            return Ok(new { data = ""});
+        }
 
 
         [HttpGet("Remove/{id}")]

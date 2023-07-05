@@ -25,6 +25,18 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<Store> Stores { get; set; }
 
+    public virtual DbSet<Structure> Structures { get; set; }
+
+    public virtual DbSet<Ucomp> Ucomps { get; set; }
+
+    public virtual DbSet<Udepartment> Udepartments { get; set; }
+
+    public virtual DbSet<Udivision> Udivisions { get; set; }
+
+    public virtual DbSet<Uplant> Uplants { get; set; }
+
+    public virtual DbSet<Usection> Usections { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<ZMaterialxxxxxxxxx> ZMaterialxxxxxxxxxes { get; set; }
@@ -73,10 +85,14 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.File)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.Parts)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Status)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreArea)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.StoreCode)
@@ -92,6 +108,9 @@ public partial class InventoryContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+            entity.Property(e => e.UserAree)
+                .HasMaxLength(255)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Material>(entity =>
@@ -115,6 +134,7 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.File)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.Parts)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -160,6 +180,99 @@ public partial class InventoryContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Structure>(entity =>
+        {
+            entity.ToTable("Structure");
+
+            entity.Property(e => e.CompCode).HasMaxLength(255);
+            entity.Property(e => e.CompName).HasMaxLength(255);
+            entity.Property(e => e.DepartmentCode).HasMaxLength(255);
+            entity.Property(e => e.DepartmentName).HasMaxLength(255);
+            entity.Property(e => e.DivisionCode).HasMaxLength(255);
+            entity.Property(e => e.DivisionName).HasMaxLength(255);
+            entity.Property(e => e.PlantCode).HasMaxLength(255);
+            entity.Property(e => e.PlantName).HasMaxLength(255);
+            entity.Property(e => e.PlantType).HasMaxLength(255);
+            entity.Property(e => e.Province).HasMaxLength(255);
+            entity.Property(e => e.SectionCode).HasMaxLength(255);
+            entity.Property(e => e.SectionName).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<Ucomp>(entity =>
+        {
+            entity.ToTable("UComp");
+
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Udepartment>(entity =>
+        {
+            entity.ToTable("UDepartments");
+
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.DepartmentCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.DivisionCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Udivision>(entity =>
+        {
+            entity.ToTable("UDivision");
+
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.DivisionCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Uplant>(entity =>
+        {
+            entity.ToTable("UPlant");
+
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.DepartmentCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.DivisionCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.PlantCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.SectionCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Usection>(entity =>
+        {
+            entity.ToTable("USection");
+
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.DepartmentCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.DivisionCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.SectionCode)
                 .HasMaxLength(255)
                 .IsUnicode(false);
         });
