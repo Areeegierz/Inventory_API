@@ -35,6 +35,7 @@ namespace Inventory_API.Controllers
         {
             var model = new SubCategory();
             model.Name = fdata.Name;
+            model.CategoryId = fdata.CategoryId;
             model.CreateBy = fdata.CreateBy;
             model.CreateDate = DateTime.Now;
             _db.SubCategories.Add(model);
@@ -64,10 +65,10 @@ namespace Inventory_API.Controllers
         public async Task<ActionResult> Remove(int id)
         {
 
-            var model = await _db.Categories.Where(i => i.Id == id).FirstOrDefaultAsync();
+            var model = await _db.SubCategories.Where(i => i.Id == id).FirstOrDefaultAsync();
             if (model != null)
             {
-                _db.Categories.Remove(model);
+                _db.SubCategories.Remove(model);
                 await _db.SaveChangesAsync();
             }
             return Ok(new { data = "Remove Success" });

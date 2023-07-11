@@ -2,18 +2,22 @@ import {
   Button,
   Card,
   Col,
-  Divider,
   Form,
   Input,
+  Popconfirm,
   Row,
   Select,
-  Space,
   Table,
+  message,
 } from "antd";
-import React from "react";
-import Dynamic from "../../components/table/Data/Dynamic";
-import Icon from "@ant-design/icons/lib/components/Icon";
+import React, { useEffect, useState } from "react";
+import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
+import axios from "axios";
+import { API_URL } from "../../constanst";
+import moment from "moment";
 const SubCategory = () => {
+  const [data, setData] = useState([]);
+
   const onFinishFailed = (errorInfo) => {};
 
   const onFinish = (values) => {
@@ -22,51 +26,86 @@ const SubCategory = () => {
 
   const columns = [
     {
-      title: "Name",
+      title: "หมวดหมู่อะไหล่",
       dataIndex: "name",
       key: "name",
-      width: 150,
+      width: 360,
       render: (text) => <span className="gx-link">{text}</span>,
     },
     {
-      title: "Age",
-      dataIndex: "age",
+      title: "ประเภทอะไหล่",
+      dataIndex: "categoryName",
       key: "age",
-      width: 70,
+      width: 360,
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "วันที่เข้าร่วม",
+      dataIndex: "createDate",
+      key: "createDate",
+      width: 360,
     },
     {
       title: "Action",
       key: "action",
       width: 360,
-      render: (text, record) => (
-        <span>
-          <span className="gx-link">Action 一 {record.name}</span>
-          <Divider type="vertical" />
-          <span className="gx-link">Delete</span>
-          <Divider type="vertical" />
-          <span className="gx-link ant-dropdown-link">
-            More actions <Icon type="down" />
-          </span>
-        </span>
+      render: (record) => (
+        <div>
+          <Button
+            style={{ color: "#286efb" }}
+            icon={<FormOutlined />}
+            type="link"
+          ></Button>
+
+          <Popconfirm
+            title={`คุณต้องการลบหมวดหมู่อะไหล่นี้ใช่หรือไม่?`}
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              axios
+                .post(API_URL + "/api/SubCategory/Remove/" + record.id)
+                .then((res) => {
+                  console.log("delete category", res);
+                  window.location.reload();
+                  message.success(`Delete ${record.date}!`);
+                });
+            }}
+          >
+            <Button
+              style={{ color: "#FF4141", textAlign: "right" }}
+              icon={<DeleteOutlined/>}
+              type="link"
+            ></Button>
+          </Popconfirm>
+        </div>
       ),
     },
   ];
 
-  const data = [];
-  for (let i = 1; i <= 10; i++) {
-    data.push({
-      key: i,
-      name: "John Brown",
-      age: `${i}2`,
-      address: `New York No. ${i} Lake Park`,
-      description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
+
+  function setDataTable() {
+    axios.get(API_URL + "/api/SubCategory/GetSubCategory").then((res) => {
+      console.log("outputget category", res);
+      res.data.data.map((el) => {
+        let date = moment(new Date(el.createDate));
+        el.createDate = date.format("DD/MM/YYYY");
+      });
+      setData(res.data.data);
     });
   }
+
+  useEffect(()=>{
+    setDataTable();
+  },[])
+  // const data = [];
+  // for (let i = 1; i <= 10; i++) {
+  //   data.push({
+  //     key: i,
+  //     name: "John Brown",
+  //     age: `${i}2`,
+  //     address: `New York No. ${i} Lake Park`,
+  //     description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
+  //   });
+  // }
 
   return (
     <>

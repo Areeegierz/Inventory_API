@@ -1,11 +1,10 @@
 import { Button, Form, Input, Modal, Row } from "antd";
 import axios from "axios";
-import { useState } from "react";
 import { API_URL, authUser } from "../../constanst";
 
 const CategoryEdit = (data) => {
 
-
+  const [form] = Form.useForm();
   const onFinishFailed = (errorInfo) => {};
   const onFinish = (values) => {
     const category = {
@@ -18,10 +17,13 @@ const CategoryEdit = (data) => {
       window.location.reload();
     });
   };
-
+  form.setFieldsValue({id:data.data.id});
+  form.setFieldsValue({name:data.data.name});
+  
   return (
     
     <Form
+    form={form}
     name="validateOnly"
     layout="vertical"
     autoComplete="off"
@@ -30,7 +32,7 @@ const CategoryEdit = (data) => {
     onFinishFailed={onFinishFailed}
     className="gx-signin-form gx-form-row0"
   >
-    <p>{JSON.stringify(data.data)}</p>
+    {/* <p>{JSON.stringify(data.data)}</p> */}
     <Form.Item style={{display:"none"}}
       name="id"
       rules={[
@@ -39,7 +41,7 @@ const CategoryEdit = (data) => {
         },
       ]}
     >
-    <Input value={data.data.id}/>
+    <Input/>
   </Form.Item>
     <Form.Item
       name="name"
@@ -50,7 +52,7 @@ const CategoryEdit = (data) => {
         },
       ]}
     >
-      <Input value={data.data.name}/>
+      <Input/>
     </Form.Item>
     <Form.Item className="align-center">
       <Row

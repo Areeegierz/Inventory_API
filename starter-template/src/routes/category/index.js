@@ -79,7 +79,7 @@ const Category = () => {
 
 
   const showModal = (record) => {
-    setDataModal(record)
+    setDataModal({id:record.id,name:record.name})
     setIsModalOpen(true);
   };
 
@@ -123,7 +123,7 @@ const Category = () => {
     <>
     
       <Row>
-        {JSON.stringify(dataModal)}
+        {/* {JSON.stringify(dataModal)} */}
         <Col xl={6} lg={6} md={24} sm={24} xs={24}>
           <Card>
             <Form
@@ -169,7 +169,7 @@ const Category = () => {
               dataSource={data}
             />
             <Modal
-            title="Basic Modal"
+            title="แก้ไขข้อมูลหมวดหมู่อะไหล่"
             open={isModalOpen}
             onCancel={handleCancel}
             footer={null}
