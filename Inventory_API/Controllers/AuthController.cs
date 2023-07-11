@@ -81,7 +81,8 @@ namespace Inventory_API.Controllers
                             var thisUser = await _db.Users.Where(i => i.Username == loginModel.Username).Select(i=> new { Id = i.Id, Name = i.Fname + " " +i.Lname ,Status = i.Status }).FirstOrDefaultAsync();
                             if (thisUser != null)
                             {
-                                return Ok(new { User = thisUser, Token = tokenString });
+                                var thiscomp = await _db.Ucomps.Where(i=>i.UserId == thisUser.Id).Select(i=>i.CompCode).FirstOrDefaultAsync();
+                                return Ok(new { User = thisUser, Token = tokenString ,Comp = thiscomp });
                             }
 
                             /// Not have user in database
@@ -102,9 +103,9 @@ namespace Inventory_API.Controllers
                                 var myUser = await _db.Users.Where(i => i.Id == newUser.Id).FirstOrDefaultAsync();
                                 if (root.data.compcode.Count() > 0)
                                 {
-                                    var compcodeModel = new Ucomp();
                                     foreach (var item in root.data.compcode)
                                     {
+                                        var compcodeModel = new Ucomp();
                                         compcodeModel.UserId = newUser.Id;
                                         compcodeModel.CompCode = item;
                                         _db.Ucomps.Add(compcodeModel);
@@ -116,9 +117,9 @@ namespace Inventory_API.Controllers
                                 }
                                 if (root.data.divisions.Count() > 0)
                                 {
-                                    var divisionModel = new Udivision();
                                     foreach (var item in root.data.divisions)
                                     {
+                                        var divisionModel = new Udivision();
                                         divisionModel.UserId = newUser.Id;
                                         divisionModel.CompCode = item.compcode;
                                         divisionModel.DivisionCode = item.divisionNo;
@@ -130,9 +131,9 @@ namespace Inventory_API.Controllers
                                 }
                                 if (root.data.departments.Count() > 0)
                                 {
-                                    var departmentModel = new Udepartment();
                                     foreach (var item in root.data.departments)
                                     {
+                                        var departmentModel = new Udepartment();
                                         departmentModel.UserId = newUser.Id;
                                         departmentModel.CompCode = item.compcode;
                                         departmentModel.DivisionCode = item.divisionNo;
@@ -145,9 +146,9 @@ namespace Inventory_API.Controllers
                                 }
                                 if (root.data.sections.Count() > 0)
                                 {
-                                    var sectionModel = new Usection();
                                     foreach (var item in root.data.sections)
                                     {
+                                        var sectionModel = new Usection();
                                         sectionModel.UserId = newUser.Id;
                                         sectionModel.CompCode = item.compcode;
                                         sectionModel.DivisionCode = item.divisionNo;
@@ -162,10 +163,10 @@ namespace Inventory_API.Controllers
                                 }
                                 if (root.data.plants.Count() > 0)
                                 {
-                                    var plantModel = new Uplant();
                                     foreach (var item in root.data.plants)
                                     {
                                         var structure = await _db.Structures.Where(i => i.PlantCode == item.plantNo).FirstOrDefaultAsync();
+                                        var plantModel = new Uplant();
                                         plantModel.UserId = newUser.Id;
                                         plantModel.CompCode = item.compcode;
                                         plantModel.DivisionCode = structure.DivisionCode;
@@ -181,9 +182,9 @@ namespace Inventory_API.Controllers
                                 }
 
                                 await _db.SaveChangesAsync();
-
                             }
-                            return Ok(new { User = newUser ,Token = tokenString });
+                            var comp = await _db.Ucomps.Where(i=>i.UserId == newUser.Id).Select(i => i.CompCode).FirstOrDefaultAsync();
+                            return Ok(new { User = newUser , Comp = comp,Token = tokenString });
                         }
                         return Unauthorized();
                     }
