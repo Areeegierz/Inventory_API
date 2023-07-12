@@ -1,2 +1,2 @@
 export const API_URL = 'https://localhost:7106';
-export const authUser = localStorage.getItem('user');
+export const authUser = JSON.parse(localStorage.getItem('user'));

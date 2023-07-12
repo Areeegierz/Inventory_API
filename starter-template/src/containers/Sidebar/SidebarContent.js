@@ -48,8 +48,9 @@ const SidebarContent = ({ sidebarCollapsed, setSidebarCollapsed }) => {
         <div
           className={`gx-sidebar-notifications ${getNoHeaderClass(navStyle)}`}
         >
-          <UserProfile />
-          <AppsNavigation />
+          {/* <UserProfile /> */}
+          {/* <AppsNavigation /> */}
+          <b>เมนู</b>
         </div>
         <CustomScrollbars className="gx-layout-sider-scrollbar">
           <Menu
@@ -90,15 +91,21 @@ const SidebarContent = ({ sidebarCollapsed, setSidebarCollapsed }) => {
               </Menu.Item>
             </SubMenu>
             
-            <Menu.Item key="create">
-              <Link to="/create">
+            <Menu.Item key="Mat">
+              <Link to="/Material">
                 <i className="icon icon-widgets" />
-                บันทึกอะไหล่
+                รายการอะไหล่
               </Link>
             </Menu.Item>
-            
+
+            <Menu.Item key="Stock">
+              <Link to="/stock">
+                <i className="icon icon-widgets" />
+                คลังอะไหล่
+              </Link>
+            </Menu.Item>
             <Menu.Item key="use">
-              <Link to="/use">
+              <Link to="/invoice">
                 <i className="icon icon-widgets" />
                 เบิกอะไหล่ออก
               </Link>

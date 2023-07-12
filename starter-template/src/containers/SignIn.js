@@ -22,7 +22,7 @@ const SignIn = () => {
 
       if (res.status === 200) {
         console.log(res.data.token);
-        localStorage.setItem("user", res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
         console.log("AUTH : "+authUser);
         window.location.assign("/");
       } else {

@@ -9,6 +9,9 @@ const App = ({match}) => (
       <Route path={`${match.url}`} exact component={asyncComponent(() => import('./dashboard/index'))}/>
       <Route path={`${match.url}category`} exact component={asyncComponent(() => import('./category/index'))}/>
       <Route path={`${match.url}subcategory`} exact component={asyncComponent(() => import('./subcategory/index'))}/>
+      <Route path={`${match.url}material`} exact component={asyncComponent(() => import('./meterial/index'))}/>
+      <Route path={`${match.url}stock`} exact component={asyncComponent(() => import('./stock/index'))}/>
+      <Route path={`${match.url}invoice`} exact component={asyncComponent(() => import('./invoice/index'))}/>
     </Switch>
   </div>
 );

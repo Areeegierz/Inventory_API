@@ -144,7 +144,7 @@ const Category = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input placeholder="ชื่อหมวดหมู่อะไหล่"/>
               </Form.Item>
               <Form.Item className="align-center">
                 <Row

@@ -4,6 +4,7 @@ import {
   Col,
   Form,
   Input,
+  Modal,
   Popconfirm,
   Row,
   Select,
@@ -13,15 +14,30 @@ import {
 import React, { useEffect, useState } from "react";
 import { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { API_URL } from "../../constanst";
+import { API_URL, authUser } from "../../constanst";
 import moment from "moment";
+import CategoryEdit from "./Edit";
+import SubCategoryEdit from "./Edit";
 const SubCategory = () => {
+  const [category, setCategory] = useState([]);
+  const [dataModal, setDataModal] = useState([]);
+
   const [data, setData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onFinishFailed = (errorInfo) => {};
 
   const onFinish = (values) => {
     console.log(values);
+    const subcategory = {
+      name: values.name,
+      categoryId: values.category,
+      createBy: authUser.id,
+    };
+    axios.post(API_URL + "/api/SubCategory/Create", subcategory).then((res) => {
+      console.log(res);
+      window.location.reload();
+    });
   };
 
   const columns = [
@@ -54,6 +70,7 @@ const SubCategory = () => {
             style={{ color: "#286efb" }}
             icon={<FormOutlined />}
             type="link"
+            onClick={()=>{showModal(record)}}
           ></Button>
 
           <Popconfirm
@@ -82,6 +99,16 @@ const SubCategory = () => {
   ];
 
 
+  function getCategory() {
+    axios.get(API_URL + "/api/Category/GetCategory").then((res) => {
+      console.log("outputget category", res);
+      res.data.data.map((el) => {
+        let date = moment(new Date(el.createDate));
+        el.createDate = date.format("DD/MM/YYYY");
+      });
+      setCategory(res.data.data);
+    });
+  }
   function setDataTable() {
     axios.get(API_URL + "/api/SubCategory/GetSubCategory").then((res) => {
       console.log("outputget category", res);
@@ -92,27 +119,31 @@ const SubCategory = () => {
       setData(res.data.data);
     });
   }
+  const showModal = (record) => {
+    setDataModal({
+      id:record.id,
+      name:record.name,
+      category:record.categoryId})
+    setIsModalOpen(true);
+  };
 
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   useEffect(()=>{
     setDataTable();
+    getCategory();
   },[])
-  // const data = [];
-  // for (let i = 1; i <= 10; i++) {
-  //   data.push({
-  //     key: i,
-  //     name: "John Brown",
-  //     age: `${i}2`,
-  //     address: `New York No. ${i} Lake Park`,
-  //     description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
-  //   });
-  // }
-
   return (
     <>
       <Row>
         <Col xl={6} lg={6} md={24} sm={24} xs={24}>
           <Card>
-            <Form name="validateOnly" layout="vertical" autoComplete="off">
+            <Form name="validateOnly" layout="vertical" autoComplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>
               <Form.Item
                 name="category"
                 label="หมวดหมู่สินค้า"
@@ -122,8 +153,10 @@ const SubCategory = () => {
                   },
                 ]}
               >
-                <Select>
-                  <Select.Option value="demo">Demo</Select.Option>
+                <Select placeholder="โปรดเลือกหมวดหมู่อะไหล่">
+                  {category.sort().map((item)=>(
+                    <Select.Option value={item.id}>{item.name}</Select.Option>
+                  ))}
                 </Select>
               </Form.Item>
               <Form.Item
@@ -135,7 +168,7 @@ const SubCategory = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input placeholder="ชื่อประเภทสินค้า"/>
               </Form.Item>
               <Form.Item className="align-center">
                 <Row
@@ -160,6 +193,14 @@ const SubCategory = () => {
               dataSource={data}
             />
           </Card>
+          <Modal
+            title="แก้ไขข้อมูลหมวดหมู่อะไหล่"
+            open={isModalOpen}
+            onCancel={handleCancel}
+            footer={null}
+          >
+            <SubCategoryEdit data={dataModal}/>
+          </Modal>
         </Col>
       </Row>
     </>

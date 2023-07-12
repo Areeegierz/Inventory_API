@@ -21,9 +21,13 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<Inventory> Inventories { get; set; }
 
+    public virtual DbSet<Invoice> Invoices { get; set; }
+
     public virtual DbSet<Material> Materials { get; set; }
 
     public virtual DbSet<Plant> Plants { get; set; }
+
+    public virtual DbSet<Stock> Stocks { get; set; }
 
     public virtual DbSet<Store> Stores { get; set; }
 
@@ -43,9 +47,13 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<ViewSubCategory> ViewSubCategories { get; set; }
+    public virtual DbSet<ViewInvoice> ViewInvoices { get; set; }
 
-    public virtual DbSet<ZMaterialxxxxxxxxx> ZMaterialxxxxxxxxxes { get; set; }
+    public virtual DbSet<ViewMaterial> ViewMaterials { get; set; }
+
+    public virtual DbSet<ViewStock> ViewStocks { get; set; }
+
+    public virtual DbSet<ViewSubCategory> ViewSubCategories { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -129,6 +137,55 @@ public partial class InventoryContext : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<Invoice>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_ComeOut");
+
+            entity.ToTable("Invoice");
+
+            entity.Property(e => e.AccountNo)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Code)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Detail).IsUnicode(false);
+            entity.Property(e => e.File)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.Parts)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.RefCode).IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Type)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Unit)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+            entity.Property(e => e.Use)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<Material>(entity =>
         {
             entity.ToTable("Material");
@@ -184,6 +241,49 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Stock>(entity =>
+        {
+            entity.ToTable("Stock");
+
+            entity.Property(e => e.AccountNo)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Code)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Detail).IsUnicode(false);
+            entity.Property(e => e.File)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.Parts)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Type)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Unit)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Store>(entity =>
@@ -309,6 +409,157 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Lname).HasColumnName("LName");
         });
 
+        modelBuilder.Entity<ViewInvoice>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_Invoice");
+
+            entity.Property(e => e.AccountNo)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Code)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CompName).HasMaxLength(255);
+            entity.Property(e => e.CreateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Detail).IsUnicode(false);
+            entity.Property(e => e.File)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.Parts)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.PlantName).HasMaxLength(255);
+            entity.Property(e => e.RefCode).IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Type)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Unit)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+            entity.Property(e => e.Use)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<ViewMaterial>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_Material");
+
+            entity.Property(e => e.AccountNo)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Code)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Detail).IsUnicode(false);
+            entity.Property(e => e.File)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.Parts)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Type)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Unit)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<ViewStock>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_Stock");
+
+            entity.Property(e => e.AccountNo)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Code)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CompName).HasMaxLength(255);
+            entity.Property(e => e.CreateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Detail).IsUnicode(false);
+            entity.Property(e => e.File)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.Parts)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Type)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Unit)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<ViewSubCategory>(entity =>
         {
             entity
@@ -318,15 +569,6 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.CategoryName).IsUnicode(false);
             entity.Property(e => e.CreateDate).HasColumnType("datetime");
             entity.Property(e => e.Name).IsUnicode(false);
-        });
-
-        modelBuilder.Entity<ZMaterialxxxxxxxxx>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Materlal__3214EC078F0A9CAE");
-
-            entity.ToTable("zMaterialxxxxxxxxx");
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         OnModelCreatingPartial(modelBuilder);
