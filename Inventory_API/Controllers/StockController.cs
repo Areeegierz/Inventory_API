@@ -77,6 +77,8 @@ namespace Inventory_API.Controllers
             model.Type = data.Type;
             model.File = data.File;
             model.AccountNo = data.AccountNo;
+            model.CategoryId = data.CategoryId;
+            model.SubCategoryId = data.SubCategoryId;
             model.CreateBy = data.CreateBy;
             model.CreateDate = DateTime.Now;
             model.UpdateBy = data.UpdateBy;
@@ -104,6 +106,8 @@ namespace Inventory_API.Controllers
             model.Type = data.Type;
             model.File = data.File;
             model.AccountNo = data.AccountNo;
+            model.CategoryId = data.CategoryId;
+            model.SubCategoryId = data.SubCategoryId;
             model.CreateBy = data.CreateBy;
             model.CreateDate = data.CreateDate;
             model.UpdateBy = data.UpdateBy;

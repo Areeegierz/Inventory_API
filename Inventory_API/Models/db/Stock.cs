@@ -33,6 +33,10 @@ public partial class Stock
 
     public string? File { get; set; }
 
+    public int? CategoryId { get; set; }
+
+    public int? SubCategoryId { get; set; }
+
     public string? AccountNo { get; set; }
 
     public string? CreateBy { get; set; }

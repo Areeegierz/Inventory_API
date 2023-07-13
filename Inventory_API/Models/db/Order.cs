@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Inventory_API.Models.db;
 
-public partial class Invoice
+public partial class Order
 {
     public int Id { get; set; }
 
@@ -38,6 +38,10 @@ public partial class Invoice
     public string? File { get; set; }
 
     public string? AccountNo { get; set; }
+
+    public int? CategoryId { get; set; }
+
+    public int? SubCategoryId { get; set; }
 
     public string? CreateBy { get; set; }
 

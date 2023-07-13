@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Inventory_API.Models.db;
 
-public partial class ViewInvoice
+public partial class ViewOrder
 {
     public int Id { get; set; }
 
@@ -48,4 +48,12 @@ public partial class ViewInvoice
     public DateTime? CreateDate { get; set; }
 
     public string? RefCode { get; set; }
+
+    public int? CategoryId { get; set; }
+
+    public string? CategoryName { get; set; }
+
+    public int? SubcategoryId { get; set; }
+
+    public string? SubCategoryName { get; set; }
 }
