@@ -29,7 +29,8 @@ namespace Inventory_API.Controllers
         [HttpGet("GetMaterial")]
         public async Task<IActionResult> Get() {
             var data = await _db.ViewMaterials.Take(100).OrderByDescending(i=>i.Id).ToListAsync();
-            return Ok(new { data = data});
+            var store = data.Select(i=>new {text = i.StoreName,value = i.StoreName}).Distinct().ToList();
+            return Ok(new {data = data ,store = store});
         }
 
         [HttpGet("GetSingleMaterial/{id}")]

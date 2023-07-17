@@ -19,7 +19,8 @@ namespace Inventory_API.Controllers
         public async Task<IActionResult> get(string compcode)
         {
             var data = await _db.ViewStocks.Where(i=>i.CompCode == compcode).ToListAsync();
-            return Json(new {data = data});
+            var store = data.Select(i=>new {text = i.StoreName,value = i.StoreName}).Distinct().ToList();
+            return Json(new {data = data ,store = store});
         }
 
         [HttpGet("GetSingle/{id}")]

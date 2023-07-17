@@ -53,7 +53,19 @@ public partial class ViewOrder
 
     public string? CategoryName { get; set; }
 
-    public int? SubcategoryId { get; set; }
+    public int? SubCategoryId { get; set; }
 
     public string? SubCategoryName { get; set; }
+
+    public string? DivisionCode { get; set; }
+
+    public string? DivisionName { get; set; }
+
+    public string? DepartmentCode { get; set; }
+
+    public string? DepartmentName { get; set; }
+
+    public string? SectionCode { get; set; }
+
+    public string? SectionName { get; set; }
 }

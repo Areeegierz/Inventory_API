@@ -47,9 +47,13 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<ViewBarChart> ViewBarCharts { get; set; }
+
     public virtual DbSet<ViewMaterial> ViewMaterials { get; set; }
 
     public virtual DbSet<ViewOrder> ViewOrders { get; set; }
+
+    public virtual DbSet<ViewPieChart> ViewPieCharts { get; set; }
 
     public virtual DbSet<ViewStock> ViewStocks { get; set; }
 
@@ -409,6 +413,19 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Lname).HasColumnName("LName");
         });
 
+        modelBuilder.Entity<ViewBarChart>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_BarChart");
+
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.PlantName).HasMaxLength(255);
+            entity.Property(e => e.Use)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<ViewMaterial>(entity =>
         {
             entity
@@ -478,7 +495,11 @@ public partial class InventoryContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.DepartmentCode).HasMaxLength(255);
+            entity.Property(e => e.DepartmentName).HasMaxLength(255);
             entity.Property(e => e.Detail).IsUnicode(false);
+            entity.Property(e => e.DivisionCode).HasMaxLength(255);
+            entity.Property(e => e.DivisionName).HasMaxLength(255);
             entity.Property(e => e.File)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -488,6 +509,8 @@ public partial class InventoryContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.PlantName).HasMaxLength(255);
             entity.Property(e => e.RefCode).IsUnicode(false);
+            entity.Property(e => e.SectionCode).HasMaxLength(255);
+            entity.Property(e => e.SectionName).HasMaxLength(255);
             entity.Property(e => e.Status)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -511,6 +534,18 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Use)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<ViewPieChart>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_PieChart");
+
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CompName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<ViewStock>(entity =>
