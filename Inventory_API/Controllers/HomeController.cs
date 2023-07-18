@@ -38,7 +38,7 @@ namespace Inventory_API.Controllers
         [HttpGet("GetPie")]
         public IActionResult Index()
         {
-            var data1 = _db.Orders.Where(i => i.CompCode == "0130").ToList();
+          var data1 = _db.Orders.Where(i => i.CompCode == "0130").ToList();
             var data2 = _db.Orders.Where(i => i.CompCode == "0140").ToList();
             var data3 = _db.Orders.Where(i => i.CompCode == "0150").ToList();
             var data4 = _db.Orders.Where(i => i.CompCode == "0190").ToList();

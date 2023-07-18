@@ -18,7 +18,7 @@ namespace Inventory_API.Controllers
         [HttpGet("GetPlant")]
         public async Task<IActionResult> getPlant()
         {
-            var data = await _db.Structures.Distinct().Select(i=> new {Code = i.PlantCode , Name = i.PlantName}).OrderBy(i=>i.Name).ToListAsync();
+            var data = await _db.Structures.Where(i=>i.PlantType == "CPAC" || i.PlantType =="N").Distinct().Select(i=> new {Code = i.PlantCode , Name = i.PlantName}).OrderBy(i=>i.Name).ToListAsync();
             return Json(new {data = data});
         }
     }

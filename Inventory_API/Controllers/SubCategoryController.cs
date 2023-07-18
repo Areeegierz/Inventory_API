@@ -26,8 +26,15 @@ namespace Inventory_API.Controllers
         [HttpGet("GetSubCategorybyId/{id}")]
         public async Task<ActionResult> Details(int id)
         {
-            var data = await _db.ViewSubCategories.Where(i=>i.Id == id).ToListAsync();
-            return Ok(new {data = data});
+            var data = await _db.ViewSubCategories.Where(i => i.Id == id).ToListAsync();
+            return Ok(new { data = data });
+        }
+
+        [HttpGet("GetSubCategorybyCategoryId/{id}")]
+        public async Task<ActionResult> GetSubCategorybyCategoryId(int id)
+        {
+            var data = await _db.ViewSubCategories.Where(i => i.CategoryId == id).ToListAsync();
+            return Ok(new { data = data });
         }
 
         [HttpPost("Create")]
@@ -49,11 +56,12 @@ namespace Inventory_API.Controllers
         [HttpPost("Update")]
         public async Task<ActionResult> Edit([FromBody] SubCategory fdata)
         {
-            var model = await _db.Categories.Where(i=>i.Id == fdata.Id).FirstOrDefaultAsync();
+            var model = await _db.SubCategories.Where(i=>i.Id == fdata.Id).FirstOrDefaultAsync();
             if (model != null)
             {
+                model.CategoryId = fdata.CategoryId;
                 model.Name = fdata.Name;
-                _db.Categories.Update(model);
+                _db.SubCategories.Update(model);
                 await _db.SaveChangesAsync();
             }
             // new data
