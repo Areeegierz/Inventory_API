@@ -1,15 +1,10 @@
 ﻿<Properties StartupConfiguration="{B32BADD0-FF9B-4580-8F3D-CF49FC2ED1AE}|https">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.Inventory__API PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workbench ActiveDocument="Inventory_API/Models/ViewModel/InvoiceViewModel.cs">
     <Files>
       <File FileName="Inventory_API/Controllers/MaterialController.cs" />
-      <File FileName="Inventory_API/Controllers/AuthController.cs" Line="1" Column="1" />
+      <File FileName="Inventory_API/Controllers/AuthController.cs" />
       <File FileName="Inventory_API/Models/ViewModel/InvoiceViewModel.cs" Line="1" Column="1" />
     </Files>
     <Pads>
@@ -20,7 +15,9 @@
               <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True">
                 <Node name="db" expanded="True" />
-                <Node name="ViewModel" expanded="True" selected="True" />
+                <Node name="ViewModel" expanded="True">
+                  <Node name="InvoiceViewModel.cs" selected="True" />
+                </Node>
               </Node>
               <Node name="Properties" expanded="True" />
             </Node>
@@ -29,4 +26,9 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
 </Properties>

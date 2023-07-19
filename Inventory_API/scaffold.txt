@@ -1,1 +1,5 @@
 Scaffold-DbContext "Server=10.162.34.159\SQL2012;Database=Inventory;User Id=sa;Password=Abc@1234;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models\db
+
+
+!!!   vs code 
+dotnet ef dbcontext scaffold "Server=10.162.34.159\SQL2012;Database=Inventory;User Id=sa;Password=Abc@1234;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models/db

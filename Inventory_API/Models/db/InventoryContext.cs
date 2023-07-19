@@ -169,7 +169,7 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.StoreCode)
+            entity.Property(e => e.StoreId)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Type)
@@ -215,7 +215,7 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.StoreCode)
+            entity.Property(e => e.StoreId)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Type)
@@ -275,7 +275,7 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.StoreCode)
+            entity.Property(e => e.StoreId)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Type)
@@ -296,7 +296,7 @@ public partial class InventoryContext : DbContext
 
             entity.ToTable("Store");
 
-            entity.Property(e => e.Code)
+            entity.Property(e => e.DivisionCode)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Name)
@@ -456,7 +456,7 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.StoreCode)
+            entity.Property(e => e.StoreId)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.StoreName)
@@ -514,7 +514,7 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.StoreCode)
+            entity.Property(e => e.StoreId)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.StoreName)
@@ -580,7 +580,7 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Status)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.StoreCode)
+            entity.Property(e => e.StoreId)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.StoreName)
@@ -611,11 +611,6 @@ public partial class InventoryContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
-    }
-
-    internal Task SaveChangesAsync()
-    {
-        throw new NotImplementedException();
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

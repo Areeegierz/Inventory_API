@@ -19,7 +19,7 @@ public partial class Material
 
     public string? Unit { get; set; }
 
-    public string? StoreCode { get; set; }
+    public string? StoreId { get; set; }
 
     public string? Status { get; set; }
 

@@ -82,7 +82,7 @@ namespace Inventory_API.Controllers
                     model.Parts = thisMat.Parts;
                     model.Count = data.Count;
                     model.Unit = thisMat.Unit;
-                    model.StoreCode = thisMat.StoreCode;
+                    model.StoreId = thisMat.StoreId;
                     model.RefCode = data.RefCode;
                     model.Status = thisMat.Status;
                     model.CategoryId = data.CategoryId;
@@ -116,7 +116,7 @@ namespace Inventory_API.Controllers
             model.Parts = data.Parts;
             model.Count = data.Count;
             model.Unit = data.Unit;
-            model.StoreCode = data.StoreCode;
+            model.StoreId = data.StoreId;
             model.RefCode = data.RefCode;
             model.Status = data.Status;
             model.Type = data.Type;

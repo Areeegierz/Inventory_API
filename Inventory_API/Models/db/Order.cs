@@ -21,7 +21,7 @@ public partial class Order
 
     public string? Unit { get; set; }
 
-    public string? StoreCode { get; set; }
+    public string? StoreId { get; set; }
 
     public string? RefCode { get; set; }
 

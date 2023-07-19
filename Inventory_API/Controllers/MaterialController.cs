@@ -79,7 +79,7 @@ namespace Inventory_API.Controllers
             model.Detail = data.Detail;
             model.Parts = data.Parts;
             model.Unit = data.Unit;
-            model.StoreCode = data.StoreCode;
+            model.StoreId = data.StoreId;
             model.Status = data.Status;
             model.Type = data.Type;
             model.File = data.File;
@@ -104,7 +104,7 @@ namespace Inventory_API.Controllers
             model.Detail = data.Detail;
             model.Parts = data.Parts;
             model.Unit = data.Unit;
-            model.StoreCode = data.StoreCode;
+            model.StoreId = data.StoreId;
             model.Status = data.Status;
             model.Type = data.Type;
             model.File = data.File;
