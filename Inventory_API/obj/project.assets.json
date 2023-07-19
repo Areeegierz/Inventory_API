@@ -4560,25 +4560,24 @@
     ]
   },
   "packageFolders": {
-    "/Users/nathanonrattanapreechachai/.nuget/packages/": {}
+    "/Users/macbookbyareegierz/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/nathanonrattanapreechachai/Documents/CPAC/Inventory_API/Inventory_API/Inventory_API.csproj",
+      "projectUniqueName": "/Users/macbookbyareegierz/Desktop/Inventory/Inventory_API/Inventory_API/Inventory_API.csproj",
       "projectName": "Inventory_API",
-      "projectPath": "/Users/nathanonrattanapreechachai/Documents/CPAC/Inventory_API/Inventory_API/Inventory_API.csproj",
-      "packagesPath": "/Users/nathanonrattanapreechachai/.nuget/packages/",
-      "outputPath": "/Users/nathanonrattanapreechachai/Documents/CPAC/Inventory_API/Inventory_API/obj/",
+      "projectPath": "/Users/macbookbyareegierz/Desktop/Inventory/Inventory_API/Inventory_API/Inventory_API.csproj",
+      "packagesPath": "/Users/macbookbyareegierz/.nuget/packages/",
+      "outputPath": "/Users/macbookbyareegierz/Desktop/Inventory/Inventory_API/Inventory_API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/nathanonrattanapreechachai/.nuget/NuGet/NuGet.Config"
+        "/Users/macbookbyareegierz/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/sdk/7.0.304/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4663,7 +4662,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.304/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
       }
     }
   }
