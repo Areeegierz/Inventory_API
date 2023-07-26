@@ -50,4 +50,6 @@ public partial class ViewStock
     public int? SubCategoryId { get; set; }
 
     public string? SubCategoryName { get; set; }
+
+    public string? DivisionCode { get; set; }
 }

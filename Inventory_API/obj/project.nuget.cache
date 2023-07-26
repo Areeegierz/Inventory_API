@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UJxQLqNyDXpcE5RYT+4gRoThGR6SNvPu8fNbf1wkg3cIDD643ktiZ6cv+f23sg9MqviNeOiO9Mvpy59fsfl0dA==",
+  "dgSpecHash": "4uGEJgZyH8snl2PjkbVXvLoIiUyGvAJ8WMujmK6fYz5zicyzdWLK8pw+TDLBdPcjhAaJsh/ZcUZZ4iY6+RHOAA==",
   "success": true,
-  "projectFilePath": "/Users/macbookbyareegierz/Desktop/Inventory/Inventory_API/Inventory_API/Inventory_API.csproj",
+  "projectFilePath": "/Users/macbookbyareegierz/Desktop/Riew Work/Inventory/Inventory_API/Inventory_API/Inventory_API.csproj",
   "expectedPackageFiles": [
     "/Users/macbookbyareegierz/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
     "/Users/macbookbyareegierz/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",

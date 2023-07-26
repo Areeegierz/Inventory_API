@@ -15,10 +15,11 @@ namespace Inventory_API.Controllers
         {
                 _db = db;
         }
-        [HttpGet("Get/{compcode}")]
-        public async Task<IActionResult> get(string compcode)
+        [HttpGet("GetStock/{uid}")]
+        public async Task<IActionResult> get(int uid)
         {
-            var data = await _db.ViewStocks.Where(i=>i.CompCode == compcode).ToListAsync();
+            var div = await _db.Udivisions.Where(i => i.UserId == uid).FirstOrDefaultAsync();
+            var data = await _db.ViewStocks.Where(i=>i.DivisionCode == div.DivisionCode).ToListAsync();
             var store = data.Select(i=>new {text = i.StoreName,value = i.StoreName}).Distinct().ToList();
             return Json(new {data = data ,store = store});
         }

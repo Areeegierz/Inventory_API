@@ -4565,11 +4565,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/macbookbyareegierz/Desktop/Inventory/Inventory_API/Inventory_API/Inventory_API.csproj",
+      "projectUniqueName": "/Users/macbookbyareegierz/Desktop/Riew Work/Inventory/Inventory_API/Inventory_API/Inventory_API.csproj",
       "projectName": "Inventory_API",
-      "projectPath": "/Users/macbookbyareegierz/Desktop/Inventory/Inventory_API/Inventory_API/Inventory_API.csproj",
+      "projectPath": "/Users/macbookbyareegierz/Desktop/Riew Work/Inventory/Inventory_API/Inventory_API/Inventory_API.csproj",
       "packagesPath": "/Users/macbookbyareegierz/.nuget/packages/",
-      "outputPath": "/Users/macbookbyareegierz/Desktop/Inventory/Inventory_API/Inventory_API/obj/",
+      "outputPath": "/Users/macbookbyareegierz/Desktop/Riew Work/Inventory/Inventory_API/Inventory_API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/macbookbyareegierz/.nuget/NuGet/NuGet.Config"
@@ -4578,6 +4578,7 @@
         "net7.0"
       ],
       "sources": {
+        "/usr/local/share/dotnet/sdk/7.0.306/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4662,7 +4663,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
       }
     }
   }

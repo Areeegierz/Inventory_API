@@ -570,6 +570,9 @@ public partial class InventoryContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.CreateDate).HasColumnType("datetime");
             entity.Property(e => e.Detail).IsUnicode(false);
+            entity.Property(e => e.DivisionCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
             entity.Property(e => e.File)
                 .HasMaxLength(255)
                 .IsUnicode(false);
