@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Numerics;
 using Inventory_API.Models.AD;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Inventory_API.Controllers
 {
@@ -40,19 +41,12 @@ namespace Inventory_API.Controllers
         }
         
 
-        [HttpGet("GetSingleMaterialbyCode/{code}/{uid}")]
-        public async Task<IActionResult> GetSinglebyCode(string code,int uid) 
+        [HttpGet("GetSingleMaterialbyCode/{code}")]
+        public async Task<IActionResult> GetSinglebyCode(string code)
         {
-            if (uid > 0)
-            {
-                var compcode = await _db.Ucomps.Where(i => i.UserId == uid).FirstOrDefaultAsync(); 
-                if (compcode != null)
-                {
-                    var data = await _db.Materials.Where(i => i.Code == code && i.CompCode == compcode.CompCode).FirstOrDefaultAsync();
-                    return Ok(new { data = data });
-                }
-            }
-            return Ok(new { data = ""});
+
+            var data = await _db.Materials.Where(i => i.Code == code).FirstOrDefaultAsync();
+            return Ok(new { data = data });
         }
 
 

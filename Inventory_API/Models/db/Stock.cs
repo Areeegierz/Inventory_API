@@ -42,4 +42,6 @@ public partial class Stock
     public string? CreateBy { get; set; }
 
     public DateTime? CreateDate { get; set; }
+
+    public string? RefCode { get; set; }
 }

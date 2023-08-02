@@ -9,8 +9,6 @@ public partial class ViewStock
 
     public string? CompCode { get; set; }
 
-    public string? CompName { get; set; }
-
     public string? Code { get; set; }
 
     public string? Name { get; set; }

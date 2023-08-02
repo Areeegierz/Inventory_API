@@ -81,8 +81,8 @@ namespace Inventory_API.Controllers
                             var thisUser = await _db.Users.Where(i => i.Username == loginModel.Username).Select(i=> new { Id = i.Id, Name = i.Fname + " " +i.Lname ,Status = i.Status }).FirstOrDefaultAsync();
                             if (thisUser != null)
                             {
-                                var thiscomp = await _db.Ucomps.Where(i=>i.UserId == thisUser.Id).Select(i=>i.CompCode).FirstOrDefaultAsync();
-                                return Ok(new { User = thisUser, Token = tokenString ,Comp = thiscomp });
+                                var thisdiv = await _db.Udivisions.Where(i=>i.UserId == thisUser.Id).Select(i=>i.DivisionCode).FirstOrDefaultAsync();
+                                return Ok(new { User = thisUser, Token = tokenString ,division = thisdiv });
                             }
 
                             /// Not have user in database
@@ -183,8 +183,8 @@ namespace Inventory_API.Controllers
 
                                 await _db.SaveChangesAsync();
                             }
-                            var comp = await _db.Ucomps.Where(i=>i.UserId == newUser.Id).Select(i => i.CompCode).FirstOrDefaultAsync();
-                            return Ok(new { User = newUser , Comp = comp,Token = tokenString });
+                            var division = await _db.Udivisions.Where(i=>i.UserId == newUser.Id).Select(i => i.DivisionCode).FirstOrDefaultAsync();
+                            return Ok(new { User = newUser , division = division,Token = tokenString });
                         }
                         return Unauthorized();
                     }

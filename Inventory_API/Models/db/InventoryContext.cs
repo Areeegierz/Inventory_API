@@ -19,7 +19,15 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<Company> Companies { get; set; }
 
+    public virtual DbSet<Group> Groups { get; set; }
+
+    public virtual DbSet<GroupMaterial> GroupMaterials { get; set; }
+
     public virtual DbSet<Inventory> Inventories { get; set; }
+
+    public virtual DbSet<Log> Logs { get; set; }
+
+    public virtual DbSet<Machine> Machines { get; set; }
 
     public virtual DbSet<Material> Materials { get; set; }
 
@@ -48,6 +56,8 @@ public partial class InventoryContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<ViewBarChart> ViewBarCharts { get; set; }
+
+    public virtual DbSet<ViewGroupMaterial> ViewGroupMaterials { get; set; }
 
     public virtual DbSet<ViewMaterial> ViewMaterials { get; set; }
 
@@ -88,6 +98,30 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Group>(entity =>
+        {
+            entity.ToTable("Group");
+
+            entity.Property(e => e.CreateBy).IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.UpdateBy).IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<GroupMaterial>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_GroupStock");
+
+            entity.ToTable("GroupMaterial");
+
+            entity.Property(e => e.CreateBy).IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.MatCode).IsUnicode(false);
+            entity.Property(e => e.UpdateBy).IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Inventory>(entity =>
@@ -139,6 +173,28 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.UserAree)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Log>(entity =>
+        {
+            entity.ToTable("Log");
+
+            entity.Property(e => e.CreateBy).IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Detail).IsUnicode(false);
+            entity.Property(e => e.Refcode).IsUnicode(false);
+            entity.Property(e => e.Status).IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Machine>(entity =>
+        {
+            entity.ToTable("Machine");
+
+            entity.Property(e => e.CreateBy).IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.UpdateBy).IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Material>(entity =>
@@ -270,6 +326,9 @@ public partial class InventoryContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.Parts)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.RefCode)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Status)
@@ -426,6 +485,16 @@ public partial class InventoryContext : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<ViewGroupMaterial>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_GroupMaterial");
+
+            entity.Property(e => e.MatCode).IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
+        });
+
         modelBuilder.Entity<ViewMaterial>(entity =>
         {
             entity
@@ -564,7 +633,6 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.CompCode)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.CompName).HasMaxLength(255);
             entity.Property(e => e.CreateBy)
                 .HasMaxLength(255)
                 .IsUnicode(false);
