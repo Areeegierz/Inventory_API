@@ -19,7 +19,7 @@ namespace Inventory_API.Controllers
         [HttpGet("GetCategory")]
         public async Task<ActionResult> GetCategory()
         {
-            var data = await _db.Categories.OrderBy(i=>i.Name).ToListAsync();
+            var data = await _db.ViewCategories.OrderBy(i=>i.Name).ToListAsync();
             return Ok(new {data = data});
         }
 

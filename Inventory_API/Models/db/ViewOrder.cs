@@ -7,10 +7,6 @@ public partial class ViewOrder
 {
     public int Id { get; set; }
 
-    public string? CompCode { get; set; }
-
-    public string? CompName { get; set; }
-
     public string? Code { get; set; }
 
     public string? Name { get; set; }
@@ -68,4 +64,8 @@ public partial class ViewOrder
     public string? SectionCode { get; set; }
 
     public string? SectionName { get; set; }
+
+    public string? CompCode { get; set; }
+
+    public string? ThisDivisionCode { get; set; }
 }

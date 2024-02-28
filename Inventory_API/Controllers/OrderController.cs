@@ -17,12 +17,76 @@ namespace Inventory_API.Controllers
         {
                 _db = db;
         }
-        [HttpGet("Get/{compcode}")]
-        public async Task<IActionResult> get(string compcode)
+        [HttpGet("Get/{uid}")]
+        public async Task<IActionResult> get(int uid)
         {
-            var data = await _db.ViewOrders.Where(i=>i.CompCode == compcode).ToListAsync();
-            var store = data.Select(i => new { text = i.StoreName, value = i.StoreName }).Distinct().ToList();
-            return Json(new { data = data, store = store });
+            var user = await _db.Users.Where(i => i.Id == uid).FirstOrDefaultAsync();
+            if (user.Status != "Admin")
+            {
+
+                var div = await _db.Udivisions.Where(i => i.UserId == uid).Select(i => i.DivisionCode).ToListAsync();
+                if (div != null)
+                {
+                    var data = await _db.ViewOrders.Where(i => div.Contains(i.DivisionCode)).OrderByDescending(i=>i.Id).ToListAsync();
+                    var store = data.Select(i => new { text = i.StoreName, value = i.StoreName }).Distinct().ToList();
+                    return Json(new { data = data, store = store });
+                }
+            }
+            else
+            {
+                var data = await _db.ViewOrders.OrderByDescending(i => i.Id).ToListAsync();
+                var store = data.Select(i => new { text = i.StoreName, value = i.StoreName }).Distinct().ToList();
+                return Json(new { data = data, store = store });
+            }
+            return NotFound();
+        }
+        [HttpGet("GetOrderPagination")]
+        public async Task<IActionResult> GetOrderPagination(int uid, int current, int pagesize, string searchtxt = null)
+
+        {
+            var data = new List<ViewOrder>();
+            var user = await _db.Users.Where(i => i.Id == uid).FirstOrDefaultAsync();
+            var totalcount = 0;
+            if (user != null)
+            {
+                if (user.Status != "Admin")
+                {
+
+                    var div = await _db.Udivisions.Where(i => i.UserId == uid).Select(i => i.DivisionCode).ToListAsync();
+                    if (div != null)
+                    {
+
+                        if (searchtxt != null)
+                        {
+                            data = await _db.ViewOrders.Where(i => i.DivisionCode.Contains(i.DivisionCode) && (i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt) || i.StoreName.Contains(searchtxt))).Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
+                            totalcount = _db.ViewOrders.Where(i => i.DivisionCode.Contains(i.DivisionCode) && (i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt) || i.StoreName.Contains(searchtxt))).Count();
+                        }
+                        else
+                        {
+                            data = await _db.ViewOrders.Where(i => i.DivisionCode.Contains(i.DivisionCode)).Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
+                            totalcount = _db.ViewOrders.Where(i => i.DivisionCode.Contains(i.DivisionCode)).Count();
+                        }
+                    }
+                }
+                else
+                {
+                    if (searchtxt != null)
+                    {
+                        data = await _db.ViewOrders.Where(i => i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt) || i.StoreName.Contains(searchtxt)).Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
+                        totalcount = _db.ViewOrders.Where(i => i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt) || i.StoreName.Contains(searchtxt)).Count();
+                    }
+                    else
+                    {
+                        data = await _db.ViewOrders.Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
+                        totalcount = _db.ViewOrders.Count();
+                    }
+                }
+            }
+
+
+
+
+            return Ok(new { data = data, count = totalcount, rowcount = data.Count(), start = pagesize * current - pagesize, end = pagesize * current });
         }
 
         [HttpGet("GetSingle/{id}")]
@@ -66,7 +130,7 @@ namespace Inventory_API.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] InvoiceViewModel data)
         {
-            var thisMat = await _db.Stocks.Where(i => i.Code == data.Code && i.CompCode == data.CompCode).FirstOrDefaultAsync();
+            var thisMat = await _db.Stocks.Where(i => i.Code == data.Code && i.StoreId == data.StoreId).FirstOrDefaultAsync();
             if (thisMat != null)
             {
                 if ( thisMat.Count - data.Count >= 0)
@@ -75,7 +139,6 @@ namespace Inventory_API.Controllers
                     _db.Stocks.Update(thisMat);
 
                     var model = new Order();
-                    model.CompCode = thisMat.CompCode;
                     model.Code = thisMat.Code;
                     model.Name = thisMat.Name;
                     model.Detail = thisMat.Detail;
@@ -83,10 +146,10 @@ namespace Inventory_API.Controllers
                     model.Count = data.Count;
                     model.Unit = thisMat.Unit;
                     model.StoreId = thisMat.StoreId;
-                    model.RefCode = data.RefCode;
+                    model.RefCode = thisMat.RefCode;
                     model.Status = thisMat.Status;
-                    model.CategoryId = data.CategoryId;
-                    model.SubCategoryId = data.SubCategoryId;
+                    model.CategoryId = thisMat.CategoryId;
+                    model.SubCategoryId = thisMat.SubCategoryId;
                     model.Type = thisMat.Type;
                     model.File = thisMat.File;
                     model.Use = data.Use;

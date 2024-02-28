@@ -28,10 +28,38 @@ namespace Inventory_API.Controllers
         }
 
         [HttpGet("GetMaterial")]
-        public async Task<IActionResult> Get() {
-            var data = await _db.ViewMaterials.Take(100).OrderByDescending(i=>i.Id).ToListAsync();
-            var store = data.Select(i=>new {text = i.StoreName,value = i.StoreName}).Distinct().ToList();
-            return Ok(new {data = data ,store = store});
+        public async Task<IActionResult> Get()
+        {
+            var data = await _db.ViewMaterials.OrderByDescending(i => i.Id).ToListAsync();
+            return Ok(new { data = data, store = "" });
+        }
+
+        [HttpGet("GetMaterialPagination")]
+        public async Task<IActionResult> GetMaterialPagination(int current,int pagesize,string searchtxt = null)
+            
+        {
+            var data = new List<ViewMaterial>();
+            var totalcount = 0;
+            if (searchtxt != null)
+            {
+                data = await _db.ViewMaterials.Where(i => i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt)).Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
+                totalcount = _db.ViewMaterials.Where(i => i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt)).Count();
+            }
+            else
+            {
+                data = await _db.ViewMaterials.Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
+                totalcount = _db.ViewMaterials.Count();
+            }
+            
+            return Ok(new { data = data, count = totalcount,rowcount = data.Count(),start = pagesize * current - pagesize,end = pagesize * current });
+        }
+
+        [HttpGet("GetMaterialbyName/{search}")]
+        public async Task<IActionResult> GetbyName(string search)
+        {
+            var data = await _db.ViewMaterials.Where(i => i.Name.Contains(search) || i.Code.Contains(search)).ToListAsync();
+
+            return Ok(new { data = data, store = "" });
         }
 
         [HttpGet("GetSingleMaterial/{id}")]

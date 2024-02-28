@@ -31,6 +31,8 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<Material> Materials { get; set; }
 
+    public virtual DbSet<Materialsss> Materialssses { get; set; }
+
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<Plant> Plants { get; set; }
@@ -40,6 +42,8 @@ public partial class InventoryContext : DbContext
     public virtual DbSet<Store> Stores { get; set; }
 
     public virtual DbSet<Structure> Structures { get; set; }
+
+    public virtual DbSet<Structuresss> Structuressses { get; set; }
 
     public virtual DbSet<SubCategory> SubCategories { get; set; }
 
@@ -57,24 +61,34 @@ public partial class InventoryContext : DbContext
 
     public virtual DbSet<ViewBarChart> ViewBarCharts { get; set; }
 
+    public virtual DbSet<ViewCategory> ViewCategories { get; set; }
+
     public virtual DbSet<ViewGroupMaterial> ViewGroupMaterials { get; set; }
+
+    public virtual DbSet<ViewLog> ViewLogs { get; set; }
 
     public virtual DbSet<ViewMaterial> ViewMaterials { get; set; }
 
     public virtual DbSet<ViewOrder> ViewOrders { get; set; }
 
+    public virtual DbSet<ViewOverView> ViewOverViews { get; set; }
+
     public virtual DbSet<ViewPieChart> ViewPieCharts { get; set; }
 
     public virtual DbSet<ViewStock> ViewStocks { get; set; }
+
+    public virtual DbSet<ViewStore> ViewStores { get; set; }
 
     public virtual DbSet<ViewSubCategory> ViewSubCategories { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=10.162.34.159\\SQL2012;Database=Inventory;User Id=sa;Password=Abc@1234;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=192.168.1.151\\SQL2012;Database=Inventory;User Id=sa;Password=Abc@1234;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.UseCollation("Thai_CI_AS");
+
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Category__3214EC0799B60670");
@@ -199,7 +213,54 @@ public partial class InventoryContext : DbContext
 
         modelBuilder.Entity<Material>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK_Mat1");
+
             entity.ToTable("Material");
+
+            entity.Property(e => e.AccountNo)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Code)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CompCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Detail).IsUnicode(false);
+            entity.Property(e => e.File)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.Parts)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreId)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Type)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Unit)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateBy)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<Materialsss>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Material");
+
+            entity.ToTable("Materialsss");
 
             entity.Property(e => e.AccountNo)
                 .HasMaxLength(255)
@@ -365,7 +426,29 @@ public partial class InventoryContext : DbContext
 
         modelBuilder.Entity<Structure>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK_ST");
+
             entity.ToTable("Structure");
+
+            entity.Property(e => e.CompCode).HasMaxLength(255);
+            entity.Property(e => e.CompName).HasMaxLength(255);
+            entity.Property(e => e.DepartmentCode).HasMaxLength(255);
+            entity.Property(e => e.DepartmentName).HasMaxLength(255);
+            entity.Property(e => e.DivisionCode).HasMaxLength(255);
+            entity.Property(e => e.DivisionName).HasMaxLength(255);
+            entity.Property(e => e.PlantCode).HasMaxLength(255);
+            entity.Property(e => e.PlantName).HasMaxLength(255);
+            entity.Property(e => e.PlantType).HasMaxLength(255);
+            entity.Property(e => e.Province).HasMaxLength(255);
+            entity.Property(e => e.SectionCode).HasMaxLength(255);
+            entity.Property(e => e.SectionName).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<Structuresss>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Structure");
+
+            entity.ToTable("Structuresss");
 
             entity.Property(e => e.CompCode).HasMaxLength(255);
             entity.Property(e => e.CompName).HasMaxLength(255);
@@ -485,6 +568,16 @@ public partial class InventoryContext : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<ViewCategory>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_Category");
+
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Name).IsUnicode(false);
+        });
+
         modelBuilder.Entity<ViewGroupMaterial>(entity =>
         {
             entity
@@ -493,6 +586,28 @@ public partial class InventoryContext : DbContext
 
             entity.Property(e => e.MatCode).IsUnicode(false);
             entity.Property(e => e.Name).IsUnicode(false);
+        });
+
+        modelBuilder.Entity<ViewLog>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_Log");
+
+            entity.Property(e => e.Code)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CreateBy).IsUnicode(false);
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.Detail).IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.Refcode).IsUnicode(false);
+            entity.Property(e => e.StoreId)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.StoreName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<ViewMaterial>(entity =>
@@ -518,17 +633,12 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.File)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Name).IsUnicode(false);
             entity.Property(e => e.Parts)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Status)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-            entity.Property(e => e.StoreId)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-            entity.Property(e => e.StoreName)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Type)
@@ -559,7 +669,6 @@ public partial class InventoryContext : DbContext
             entity.Property(e => e.CompCode)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.CompName).HasMaxLength(255);
             entity.Property(e => e.CreateBy)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -590,6 +699,10 @@ public partial class InventoryContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.SubCategoryName).IsUnicode(false);
+            entity.Property(e => e.ThisDivisionCode)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("ThisDIvisionCode");
             entity.Property(e => e.Type)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -601,6 +714,21 @@ public partial class InventoryContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.UpdateDate).HasColumnType("datetime");
             entity.Property(e => e.Use)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<ViewOverView>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_OverView");
+
+            entity.Property(e => e.DivisionCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Name).IsUnicode(false);
+            entity.Property(e => e.StoreId)
                 .HasMaxLength(255)
                 .IsUnicode(false);
         });
@@ -668,6 +796,21 @@ public partial class InventoryContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<ViewStore>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("View_Store");
+
+            entity.Property(e => e.DivisionCode)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.DivisionName).HasMaxLength(255);
+            entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<ViewSubCategory>(entity =>

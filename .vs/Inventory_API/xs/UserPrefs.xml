@@ -1,34 +1,44 @@
 ﻿<Properties StartupConfiguration="{B32BADD0-FF9B-4580-8F3D-CF49FC2ED1AE}|https">
-  <MonoDevelop.Ide.ItemProperties.Inventory__API PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Inventory_API/Models/ViewModel/InvoiceViewModel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Inventory_API/Controllers/StoreController.cs">
     <Files>
+      <File FileName="Inventory_API/Controllers/HomeController.cs" />
+      <File FileName="Inventory_API/Controllers/StockController.cs" Line="51" Column="1" />
+      <File FileName="Inventory_API/Controllers/StoreController.cs" Line="81" Column="33" />
+      <File FileName="Inventory_API/Controllers/CategoryController.cs" />
+      <File FileName="Inventory_API/Controllers/OverviewController.cs" />
+      <File FileName="Inventory_API/scaffold.txt" />
+      <File FileName="Inventory_API/appsettings.json" Line="9" Column="6" />
       <File FileName="Inventory_API/Controllers/MaterialController.cs" />
       <File FileName="Inventory_API/Controllers/AuthController.cs" />
-      <File FileName="Inventory_API/Models/ViewModel/InvoiceViewModel.cs" Line="1" Column="1" />
+      <File FileName="Inventory_API/Controllers/OrderController.cs" />
+      <File FileName="Inventory_API/Program.cs" Line="31" Column="1" />
+      <File FileName="Inventory_API/Controllers/LogController.cs" />
+      <File FileName="Inventory_API/Models/db/ViewLog.cs" />
+      <File FileName="Inventory_API/Controllers/SubCategoryController.cs" />
+      <File FileName="Inventory_API/Models/LoginModel.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Inventory_API" expanded="True">
-            <Node name="Inventory_API" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Models" expanded="True">
-                <Node name="db" expanded="True" />
-                <Node name="ViewModel" expanded="True">
-                  <Node name="InvoiceViewModel.cs" selected="True" />
-                </Node>
+            <Node name="Inventory_API">
+              <Node name="Controllers" expanded="True">
+                <Node name="StoreController.cs" selected="True" />
               </Node>
-              <Node name="Properties" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Inventory__API PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <Debugger.DebugSourceFolders>
+    <String>/Users/nathanonrattanapreechachai/Documents/CPAC</String>
+  </Debugger.DebugSourceFolders>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
 </Properties>

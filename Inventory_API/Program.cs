@@ -21,7 +21,7 @@ namespace Inventory_API
             {
                 options.AddDefaultPolicy(builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000")
+                    builder.WithOrigins("http://inventory.cipcloud.net", "https://inventory.cipcloud.net", "http://localhost:3000")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });

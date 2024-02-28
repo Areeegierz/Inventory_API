@@ -19,10 +19,6 @@ public partial class ViewMaterial
 
     public string? Unit { get; set; }
 
-    public string? StoreId { get; set; }
-
-    public string? StoreName { get; set; }
-
     public string? Status { get; set; }
 
     public string? UpdateBy { get; set; }

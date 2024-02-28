@@ -55,23 +55,23 @@ namespace Inventory_API.Controllers
                         var root = JsonConvert.DeserializeObject<JsonViewModel>(apiResponse);
 
 
-                        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("supersecretkey@123"));
-                        var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                        //var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("supersecretkey@123"));
+                        //var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-                        var claims = new[]
-                        {
-                            new Claim(ClaimTypes.Name, loginModel.Username)
-                        };
+                        //var claims = new[]
+                        //{
+                        //    new Claim(ClaimTypes.Name, loginModel.Username)
+                        //};
 
-                        var tokenOptions = new JwtSecurityToken(
-                            issuer: "http://localhost:3000",
-                            audience: "http://localhost:3000",
-                            claims: claims,
-                            expires: DateTime.Now.AddMinutes(30),
-                            signingCredentials: signinCredentials
-                        );
+                        //var tokenOptions = new JwtSecurityToken(
+                        //    issuer: "http://localhost:3000",
+                        //    audience: "http://localhost:3000",
+                        //    claims: claims,
+                        //    expires: DateTime.Now.AddMinutes(30),
+                        //    signingCredentials: signinCredentials
+                        //);
 
-                        var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+                        //var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
                         // check API Status 200
                         if (root.status == 200)
@@ -82,7 +82,7 @@ namespace Inventory_API.Controllers
                             if (thisUser != null)
                             {
                                 var thisdiv = await _db.Udivisions.Where(i=>i.UserId == thisUser.Id).Select(i=>i.DivisionCode).FirstOrDefaultAsync();
-                                return Ok(new { User = thisUser, Token = tokenString ,division = thisdiv });
+                                return Ok(new { User = thisUser, Token = "" ,division = thisdiv });
                             }
 
                             /// Not have user in database
@@ -109,6 +109,7 @@ namespace Inventory_API.Controllers
                                         compcodeModel.UserId = newUser.Id;
                                         compcodeModel.CompCode = item;
                                         _db.Ucomps.Add(compcodeModel);
+                                        await _db.SaveChangesAsync();
 
                                     }
 
@@ -124,6 +125,7 @@ namespace Inventory_API.Controllers
                                         divisionModel.CompCode = item.compcode;
                                         divisionModel.DivisionCode = item.divisionNo;
                                         _db.Udivisions.Add(divisionModel);
+                                        await _db.SaveChangesAsync();
 
                                     }
                                     myUser.Role = "Division";
@@ -139,6 +141,7 @@ namespace Inventory_API.Controllers
                                         departmentModel.DivisionCode = item.divisionNo;
                                         departmentModel.DepartmentCode = item.departmentNo;
                                         _db.Udepartments.Add(departmentModel);
+                                        await _db.SaveChangesAsync();
 
                                     }
                                     myUser.Role = "Department";
@@ -155,6 +158,7 @@ namespace Inventory_API.Controllers
                                         sectionModel.DepartmentCode = item.departmentNo;
                                         sectionModel.SectionCode = item.sectionNo;
                                         _db.Usections.Add(sectionModel);
+                                        await _db.SaveChangesAsync();
 
                                     }
 
@@ -174,6 +178,7 @@ namespace Inventory_API.Controllers
                                         plantModel.SectionCode = structure.SectionCode;
                                         plantModel.PlantCode = item.plantNo;
                                         _db.Uplants.Add(plantModel);
+                                        await _db.SaveChangesAsync();
 
                                     }
 
@@ -184,7 +189,7 @@ namespace Inventory_API.Controllers
                                 await _db.SaveChangesAsync();
                             }
                             var division = await _db.Udivisions.Where(i=>i.UserId == newUser.Id).Select(i => i.DivisionCode).FirstOrDefaultAsync();
-                            return Ok(new { User = newUser , division = division,Token = tokenString });
+                            return Ok(new { User = newUser , division = division,Token = "" });
                         }
                         return Unauthorized();
                     }

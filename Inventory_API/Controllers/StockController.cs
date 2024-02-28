@@ -1,4 +1,6 @@
-﻿using Inventory_API.Models.db;
+﻿using System.Linq;
+using Inventory_API.Models.AD;
+using Inventory_API.Models.db;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,10 +20,98 @@ namespace Inventory_API.Controllers
         [HttpGet("GetStock/{uid}")]
         public async Task<IActionResult> get(int uid)
         {
-            var div = await _db.Udivisions.Where(i => i.UserId == uid).FirstOrDefaultAsync();
-            var data = await _db.ViewStocks.Where(i=>i.DivisionCode == div.DivisionCode).ToListAsync();
-            var store = data.Select(i=>new {text = i.StoreName,value = i.StoreName}).Distinct().ToList();
-            return Json(new {data = data ,store = store});
+            var user = await _db.Users.Where(i => i.Id == uid).FirstOrDefaultAsync();
+            if (user.Status != "Admin")
+            {
+
+                var div = await _db.Udivisions.Where(i => i.UserId == uid).Select(i => i.DivisionCode).ToListAsync();
+                if (div != null)
+                {
+                    var data = await _db.ViewStocks.Where(i =>  div.Contains(i.DivisionCode)).OrderByDescending(i => i.Id).ToListAsync();
+                    var store = data.Select(i => new { text = i.StoreName, value = i.StoreName }).Distinct().ToList();
+                    return Json(new { data = data, store = store });
+                }
+            }
+            else
+            {
+                var data = await _db.ViewStocks.OrderByDescending(i => i.Id).ToListAsync();
+                var store = data.Select(i => new { text = i.StoreName, value = i.StoreName }).Distinct().ToList();
+                return Json(new { data = data, store = store });
+            }
+            return NotFound();
+        }
+        [HttpGet("GetStockPagination")]
+        public async Task<IActionResult> GetStockPagination( int uid,int current, int pagesize, string searchtxt = null)
+
+        {
+            var data = new List<ViewStock>();
+            var user = await _db.Users.Where(i => i.Id == uid).FirstOrDefaultAsync();
+            var totalcount = 0;
+            if (user!=null)
+            {
+                if (user.Status != "Admin")
+                {
+
+                    var div = await _db.Udivisions.Where(i => i.UserId == uid).Select(i => i.DivisionCode).ToListAsync();
+                    if (div != null)
+                    {
+                        
+                        if (searchtxt != null)
+                        {
+                            data = await _db.ViewStocks.Where(i => div.Contains(i.DivisionCode)&& (i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt) || i.StoreName.Contains(searchtxt))).Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
+                            totalcount = data.Count();
+                        }
+                        else
+                        {
+                            data = await _db.ViewStocks.Where(i=> div.Contains(i.DivisionCode)).Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
+                            totalcount = data.Count();
+                        }
+                    }
+                }
+                else
+                {
+                    if (searchtxt != null)
+                    {
+                        data = await _db.ViewStocks.Where(i => i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt) || i.StoreName.Contains(searchtxt)).Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
+                        totalcount = _db.ViewStocks.Where(i => i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt) || i.StoreName.Contains(searchtxt)).Count();
+                    }
+                    else
+                    {
+                        data = await _db.ViewStocks.Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
+                        totalcount = _db.ViewStocks.Count();
+                    }
+                }
+            }
+           
+           
+           
+
+            return Ok(new { data = data, count = totalcount, rowcount = data.Count(), start = pagesize * current - pagesize, end = pagesize * current });
+        }
+        [HttpGet("GetStockDistinct/{uid}")]
+        public async Task<IActionResult> GetStockDistinct(int uid)
+        {
+            var user = await _db.Users.Where(i => i.Id == uid).FirstOrDefaultAsync();
+            if (user!=null)
+            {
+                if (user.Status != "Admin")
+                {
+
+                    var div = await _db.Udivisions.Where(i => i.UserId == uid).Select(i=>i.DivisionCode).ToListAsync();
+                    if (div != null)
+                    {
+                        var data = await _db.ViewStocks.Where(i => div.Contains(i.DivisionCode)).Select(i => new { Code = i.Code, Name = i.Name }).Distinct().ToListAsync();
+                        return Json(new { data = data, store = "" });
+                    }
+                }
+                else
+                {
+                    var data = await _db.ViewStocks.OrderByDescending(i => i.Id).Select(i => new { Code = i.Code, Name = i.Name }).Distinct().ToListAsync();
+                    return Json(new { data = data, store = "" });
+                }
+            }
+            
+            return NotFound();
         }
 
         [HttpGet("GetSingle/{id}")]
@@ -45,6 +135,14 @@ namespace Inventory_API.Controllers
                 }
             }
             return Ok(new { data = "" });
+        }
+
+        [HttpGet("GetSinglebyCodeAndStoreId/{code}/{storeId}/{uid}")]
+        public async Task<IActionResult> GetSinglebyCode(string code, string storeId, int uid)
+        {
+
+            var data = await _db.ViewStocks.Where(i => i.Code == code && i.StoreId == storeId).FirstOrDefaultAsync();
+            return Ok(new { data = data });
         }
 
 
@@ -103,11 +201,13 @@ namespace Inventory_API.Controllers
             {
                 var log = new Log();
                 log.Refcode = data.RefCode;
-                log.Refcode = "เพิ่มจำนวนอะไหล่จำนวน"+ data.Count +" "+ data.Unit;
+                log.Detail = "เพิ่มจำนวนอะไหล่จำนวน "+ data.Count +" "+ data.Unit;
                 log.Status = "Add";
                 log.StockId = mydata.Id;
                 log.CreateBy = data.CreateBy;
                 log.CreateDate = DateTime.Now;
+                _db.Logs.Add(log);
+                await _db.SaveChangesAsync();
             }
             return Ok(new { data = mydata });
         }
@@ -145,7 +245,7 @@ namespace Inventory_API.Controllers
         [HttpGet("GetLog/{id}")]
         public async Task<IActionResult> Update(int id)
         {
-            var data = await _db.Logs.Where(i => i.StockId == id).ToListAsync();
+            var data = await _db.Logs.Where(i => i.StockId == id).OrderByDescending(i=>i.Id).ToListAsync();
             return Ok(new { data = data });
         }
     }
