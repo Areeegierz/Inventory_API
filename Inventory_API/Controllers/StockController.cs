@@ -46,6 +46,7 @@ namespace Inventory_API.Controllers
         {
             var data = new List<ViewStock>();
             var user = await _db.Users.Where(i => i.Id == uid).FirstOrDefaultAsync();
+
             var totalcount = 0;
             if (user!=null)
             {
@@ -60,11 +61,15 @@ namespace Inventory_API.Controllers
                         {
                             data = await _db.ViewStocks.Where(i => div.Contains(i.DivisionCode)&& (i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt) || i.StoreName.Contains(searchtxt))).Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
                             totalcount = data.Count();
+                            var store = data.Select(i => new { value = i.StoreId, text = i.StoreName }).ToList();
+                            return Ok(new { data = data, count = totalcount, rowcount = data.Count(), start = pagesize * current - pagesize, end = pagesize * current, store = store });
                         }
                         else
                         {
                             data = await _db.ViewStocks.Where(i=> div.Contains(i.DivisionCode)).Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
                             totalcount = data.Count();
+                            var store = data.Select(i => new { value = i.StoreId, text = i.StoreName }).ToList();
+                            return Ok(new { data = data, count = totalcount, rowcount = data.Count(), start = pagesize * current - pagesize, end = pagesize * current, store = store });
                         }
                     }
                 }
@@ -74,11 +79,16 @@ namespace Inventory_API.Controllers
                     {
                         data = await _db.ViewStocks.Where(i => i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt) || i.StoreName.Contains(searchtxt)).Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
                         totalcount = _db.ViewStocks.Where(i => i.Code.Contains(searchtxt) || i.Name.Contains(searchtxt) || i.Detail.Contains(searchtxt) || i.Parts.Contains(searchtxt) || i.Unit.Contains(searchtxt) || i.UpdateBy.Contains(searchtxt) || i.StoreName.Contains(searchtxt)).Count();
+                        var store = data.Select(i => new { value = i.StoreId, text = i.StoreName }).ToList();
+                        return Ok(new { data = data, count = totalcount, rowcount = data.Count(), start = pagesize * current - pagesize, end = pagesize * current, store = store });
                     }
                     else
                     {
                         data = await _db.ViewStocks.Skip(pagesize * current - pagesize).Take(pagesize).OrderByDescending(i => i.Id).ToListAsync();
                         totalcount = _db.ViewStocks.Count();
+                        var store = data.Select(i => new { value = i.StoreId, text = i.StoreName }).ToList();
+                        return Ok(new { data = data, count = totalcount, rowcount = data.Count(), start = pagesize * current - pagesize, end = pagesize * current, store = store });
+
                     }
                 }
             }
@@ -86,7 +96,7 @@ namespace Inventory_API.Controllers
            
            
 
-            return Ok(new { data = data, count = totalcount, rowcount = data.Count(), start = pagesize * current - pagesize, end = pagesize * current });
+            return Ok(new { data = data, count = totalcount, rowcount = data.Count(), start = pagesize * current - pagesize, end = pagesize * current , store = "null"});
         }
         [HttpGet("GetStockDistinct/{uid}")]
         public async Task<IActionResult> GetStockDistinct(int uid)
@@ -100,13 +110,13 @@ namespace Inventory_API.Controllers
                     var div = await _db.Udivisions.Where(i => i.UserId == uid).Select(i=>i.DivisionCode).ToListAsync();
                     if (div != null)
                     {
-                        var data = await _db.ViewStocks.Where(i => div.Contains(i.DivisionCode)).Select(i => new { Code = i.Code, Name = i.Name }).Distinct().ToListAsync();
+                        var data = await _db.ViewStocks.Where(i => div.Contains(i.DivisionCode)).Select(i => new {Id = i.Id , Code = i.Code, Name = i.Name }).Distinct().ToListAsync();
                         return Json(new { data = data, store = "" });
                     }
                 }
                 else
                 {
-                    var data = await _db.ViewStocks.OrderByDescending(i => i.Id).Select(i => new { Code = i.Code, Name = i.Name }).Distinct().ToListAsync();
+                    var data = await _db.ViewStocks.OrderByDescending(i => i.Id).Select(i => new { Id = i.Id, Code = i.Code, Name = i.Name }).Distinct().ToListAsync();
                     return Json(new { data = data, store = "" });
                 }
             }
